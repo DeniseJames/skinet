@@ -5,6 +5,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.EntityFrameworkCore;
+using Core.Interfaces;
+using AutoMapper;
+using API.Helpers;
 
 namespace API
 {
@@ -25,7 +28,9 @@ namespace API
             services.AddControllers();
             services.AddDbContext<StoreContext>(options =>
                     options.UseSqlServer(_config.GetConnectionString("DefaultConnection"), b => b.MigrationsAssembly("API")));
-            services.AddScoped<IDbInitializer, DbInitializer>();
+           services.AddScoped<IProductRepository, ProductRepository>();
+           services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
+            services.AddAutoMapper(typeof(MappingProfiles));
         }
 
 
@@ -48,7 +53,7 @@ namespace API
             app.UseHttpsRedirection();
 
             app.UseRouting();
-
+            app.UseStaticFiles();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
