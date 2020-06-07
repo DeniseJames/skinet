@@ -5,12 +5,17 @@ import { IProductBrand } from '../core/models/productBrands';
 import { IProductTypes } from '../core/models/productTypes';
 import {map} from 'rxjs/operators';
 import { ShopParams } from '../core/models/shopParams';
+import { IProduct } from '../core/models/product';
+import { of } from 'rxjs/internal/observable/of';
+import { Guid } from 'guid-typescript';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ShopService {
   baseUrl = 'https://localhost:44359/api/';
+
+
   constructor(private http: HttpClient ) { }
 
   getProducts(shopParams: ShopParams){
@@ -48,5 +53,14 @@ export class ShopService {
     );
   }
 
+  getProduct(id: Guid) {
+/*    const product = this.products.find(p => p.id === id);
+
+    if (product) {
+      return of(product);
+    }
+    return this.http.get<IProduct>(this.baseUrl + 'products/' + id);*/
+    return this.http.get(this.baseUrl + 'products/' + id);
+  }
 
 }
