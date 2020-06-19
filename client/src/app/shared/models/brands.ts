@@ -1,5 +1,5 @@
 
-export interface IType {
+export interface IBrand {
     id: string;
     name: string;
 }

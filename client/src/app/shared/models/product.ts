@@ -1,7 +1,6 @@
-import { Guid } from 'guid-typescript';
 
 export interface IProduct {
-    id: Guid;
+    id: string;
     name: string;
     description: string;
     price: number;
